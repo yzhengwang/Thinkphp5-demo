@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-
 </head>
 <body>
 <div id="app">
@@ -34,6 +33,10 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!--import Axios-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--import Qs-->
+<script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
 <script>
     new Vue({
         el: '#app',
@@ -47,7 +50,25 @@
         },
         methods: {
             onSubmit(){
-                console.log('submit!');
+                let _this = this;
+                let data = {
+                    username: this.form.username,
+                    password: this.form.password
+                };
+                // 发送 POST 请求
+                axios.post("{:url('admin/Login/login')}", Qs.stringify(data)).then(function (res) {
+                    if (res.data.code == 200) {
+                        _this.$message({
+                            message: '登陆成功',
+                            type: 'success'
+                        });
+                        setTimeout(function () {
+                            window.location.href = "{:url('admin/Index/index')}";
+                        }, 1500);
+                    } else {
+                        _this.$message.error(res.data.message);
+                    }
+                });
             }
         }
     })
@@ -62,6 +83,10 @@
         margin: 0 auto;
         margin-top: 100px;
         text-align: center;
+        border: 1px solid #bababa;
+        padding: 23px;
+        border-radius: 3px;
+        box-shadow: 5px 5px 10px #bababa;
     }
 </style>
 </html>

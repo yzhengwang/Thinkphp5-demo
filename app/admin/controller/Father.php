@@ -12,6 +12,7 @@
 namespace app\admin\controller;
 
 use think\Controller;
+use think\Session;
 
 class Father extends Controller {
 
@@ -20,7 +21,7 @@ class Father extends Controller {
      */
     public function __construct() {
         parent::__construct();
-        if (config('user_info') == null) {
+        if (Session::get('username') == null) {
             $this->isLogin();
         }
     }
