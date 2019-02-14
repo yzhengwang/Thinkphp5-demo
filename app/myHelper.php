@@ -18,7 +18,7 @@ if (!function_exists('ajax_return')) {
      * @return \think\response\Json
      */
     function ajax_return($data, $code, $msg) {
-        $result = ['data' => $data, 'code' => $code, 'message' => $msg];
+        $result = ['result' => $data, 'code' => $code, 'message' => $msg];
         return json($result);
     }
 }
